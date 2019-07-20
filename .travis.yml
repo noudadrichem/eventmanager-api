@@ -18,4 +18,4 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
-  - ./gradlew clean test
+  - ./gradlew clean test --debug
