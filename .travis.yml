@@ -1,0 +1,18 @@
+sudo: required
+
+language: java
+
+jdk:
+  - openjdk11
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
+    - '.gradle'
+
+services:
+  - postgresql
+
+script:
+  - ./gradlew clean test
