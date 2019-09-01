@@ -2,20 +2,25 @@ sudo: required
 
 language: java
 
-jdk:
-  - openjdk11
+jdk: openjdk11
+
+git:
+  depth: 9999999
+
+services:
+  - docker
+
+before_script:
+  - bash ./.travis/install-postgres-11.sh
+
+script:
+  - ./gradlew build jacocoTestReport sonarqube
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.gradle'
-    - '.gradle'
-
-services:
-  - postgresql
-
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-
-script:
-  - ./gradlew clean test --debug
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/

@@ -1,9 +1,11 @@
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
+    id 'org.sonarqube' version '2.7'
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
 
 group = 'hu.indicium'
 version = '0.0.1-SNAPSHOT'
@@ -31,4 +33,31 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
+sonarqube {
+    properties {
+        property 'sonar.projectKey', System.getenv('SONAR_PROJECT_KEY')
+        property 'sonar.organization', System.getenv('SONAR_ORGANIZATION')
+        property 'sonar.login', System.getenv('SONAR_TOKEN')
+        property "sonar.host.url", System.getenv('SONAR_URL')
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.4"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'full'
+    }
 }
