@@ -1,84 +1,71 @@
 package hu.indicium.eventmanager.event;
 
 import hu.indicium.eventmanager.event.dto.EventDTO;
-import hu.indicium.eventmanager.event.dto.NewEventDTO;
-import hu.indicium.eventmanager.event.dto.UpdateEventDTO;
+import hu.indicium.eventmanager.event.requests.NewEventRequest;
+import hu.indicium.eventmanager.event.requests.UpdateEventRequest;
 import hu.indicium.eventmanager.responses.DeleteSuccessResponse;
 import hu.indicium.eventmanager.responses.Response;
 import hu.indicium.eventmanager.responses.SuccessResponse;
-import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class EventController {
 
-    private final EventServiceInterface eventService;
+    private final EventService eventService;
 
-    private final ModelMapper modelMapper;
-
-    public EventController(EventServiceInterface eventService, ModelMapper modelMapper) {
+    public EventController(EventService eventService) {
         this.eventService = eventService;
-        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/events")
-    public Response createEvent(@RequestBody NewEventDTO eventDTO) {
-        Event event = toEvent(eventDTO);
-        event = eventService.addEvent(event);
-        return new SuccessResponse(toEventDTO(event));
-    }
-
-    @GetMapping("/events/coming")
-    public Response getComingEvents() {
-        List<Event> events = eventService.getComingEvents();
-        List<EventDTO> eventDTOS = events.stream()
-                .map(this::toEventDTO)
-                .collect(Collectors.toList());
-        return new SuccessResponse(eventDTOS);
+    public Response createEvent(@RequestBody @Valid NewEventRequest eventRequest) {
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setName(eventRequest.getName());
+        eventDTO.setDescription(eventRequest.getDescription());
+        eventDTO.setStartDate(eventRequest.getStartDate());
+        eventDTO.setEndDate(eventRequest.getEndDate());
+        eventDTO.setLocation(eventRequest.getLocation());
+        EventDTO event = eventService.addEvent(eventDTO);
+        return new SuccessResponse(event);
     }
 
     @GetMapping("/events")
     public Response getAllEvents() {
-        List<Event> events = eventService.getAllEvents();
-        List<EventDTO> eventDTOS = events.stream()
-                .map(this::toEventDTO)
-                .collect(Collectors.toList());
-        return new SuccessResponse(eventDTOS);
+        List<EventDTO> events = eventService.getAllEvents();
+        return new SuccessResponse(events);
+    }
+
+    @GetMapping("/events/coming")
+    public Response getComingEvents() {
+        List<EventDTO> events = eventService.getComingEvents();
+        return new SuccessResponse(events);
     }
 
     @GetMapping("/events/{eventId}")
     public Response getEvent(@PathVariable Long eventId) {
-        Event event = eventService.getEvent(eventId);
-        return new SuccessResponse(toEventDTO(event));
+        EventDTO event = eventService.getEvent(eventId);
+        return new SuccessResponse(event);
     }
 
     @PutMapping("/events/{eventId}")
-    public Response updateEvent(@PathVariable Long eventId, @RequestBody UpdateEventDTO eventDTO) {
-        Event event = toEvent(eventDTO);
-        event.setId(eventId);
-        event = eventService.editEvent(event);
-        return new SuccessResponse(toEventDTO(event));
+    public Response updateEvent(@PathVariable Long eventId, @RequestBody @Valid UpdateEventRequest eventRequest) {
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setId(eventId);
+        eventDTO.setName(eventRequest.getName());
+        eventDTO.setDescription(eventRequest.getDescription());
+        eventDTO.setStartDate(eventRequest.getStartDate());
+        eventDTO.setEndDate(eventRequest.getEndDate());
+        eventDTO.setLocation(eventRequest.getLocation());
+        EventDTO updatedEventDTO = eventService.editEvent(eventDTO);
+        return new SuccessResponse(updatedEventDTO);
     }
 
     @DeleteMapping("/events/{eventId}")
     public Response deleteEvent(@PathVariable Long eventId) {
-        Event event = eventService.getEvent(eventId);
-        eventService.deleteEvent(event);
+        eventService.deleteEvent(eventId);
         return new DeleteSuccessResponse();
-    }
-
-    private Event toEvent(NewEventDTO eventDTO) {
-        return modelMapper.map(eventDTO, Event.class);
-    }
-
-    private Event toEvent(UpdateEventDTO eventDTO) {
-        return modelMapper.map(eventDTO, Event.class);
-    }
-
-    private EventDTO toEventDTO(Event event) {
-        return modelMapper.map(event, EventDTO.class);
     }
 }

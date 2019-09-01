@@ -1,49 +1,19 @@
 package hu.indicium.eventmanager.event;
 
-import java.util.Date;
+import hu.indicium.eventmanager.event.dto.EventDTO;
+
 import java.util.List;
 
-public class EventService implements EventServiceInterface {
+public interface EventService {
+    List<EventDTO> getAllEvents();
 
-    private final EventRepository eventRepository;
+    List<EventDTO> getComingEvents();
 
-    public EventService(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
-    }
+    EventDTO getEvent(Long eventId);
 
-    @Override
-    public List<Event> getAllEvents() {
-        return eventRepository.findAll();
-    }
+    EventDTO addEvent(EventDTO event);
 
-    @Override
-    public List<Event> getComingEvents() {
-        return eventRepository.findAllByEndDateAfter(new Date());
-    }
+    EventDTO editEvent(EventDTO event);
 
-    @Override
-    public Event getEvent(Long eventId) {
-        return eventRepository.findById(eventId)
-                .orElse(null);
-    }
-
-    @Override
-    public Event addEvent(Event event) {
-        return eventRepository.save(event);
-    }
-
-    @Override
-    public Event editEvent(Event event) {
-        Event event1 = eventRepository.findById(event.getId()).orElseThrow(() -> new RuntimeException("rip"));
-        event1.setDescription(event.getDescription());
-        event1.setEndDate(event.getEndDate());
-        event1.setStartDate(event.getStartDate());
-        event1.setName(event.getName());
-        return eventRepository.save(event1);
-    }
-
-    @Override
-    public void deleteEvent(Event event) {
-        eventRepository.delete(event);
-    }
+    void deleteEvent(Long eventId);
 }
