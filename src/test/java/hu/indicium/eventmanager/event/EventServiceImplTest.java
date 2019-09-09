@@ -48,6 +48,8 @@ class EventServiceTest {
         eventDTO.setLocation(event.getLocation());
 
         when(eventMapper.toEntity(any(EventDTO.class))).thenReturn(event);
+        when(eventMapper.toDTO(any(Event.class))).thenReturn(eventDTO);
+        when(eventRepository.save(any(Event.class))).thenReturn(event);
 
         EventDTO returnedEventDTO = eventService.addEvent(eventDTO);
 
