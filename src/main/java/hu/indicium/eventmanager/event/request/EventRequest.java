@@ -1,42 +1,102 @@
 package hu.indicium.eventmanager.event.request;
 
-import javax.validation.constraints.NotEmpty;
-import java.util.Date;
+import java.util.*;
 
 public class EventRequest {
-
-    @NotEmpty
-    private String title;
-
-    @NotEmpty
-    private String description;
-
-    @NotEmpty
+    private Long id;
     private Date startDate;
-
-    @NotEmpty
     private Date endDate;
-
-    @NotEmpty
+    private String slug;
+    private String status;
+    private String title;
+    private String description;
     private String location;
+    private String url;
+    private ArrayList<String> categories;
 
-    public String getTitle() {
-        return title;
+    public Long getId() {
+        return id;
     }
 
-    public String getDescription() {
-        return description;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getStartDate() {
         return startDate;
     }
 
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
     public Date getEndDate() {
         return endDate;
     }
 
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getLocation() {
         return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public ArrayList<String> getCategories() {
+        return this.categories;
+    }
+
+    public void setCategories(ArrayList<String> categories) {
+        this.categories = categories;
+    }
+
+    public void addCategory(String category) {
+        if (!this.categories.contains(category)) {
+            this.categories.add(category);
+        }
     }
 }

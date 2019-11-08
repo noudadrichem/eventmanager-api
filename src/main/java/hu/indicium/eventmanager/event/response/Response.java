@@ -4,10 +4,13 @@ public class Response {
     private Object data;
     private Object error;
 
+    public Response() {}
+
     public Response(Object data, Object error) {
         this.data = data;
         this.error = error;
     }
+
 
     public Object getData() {
         return data;

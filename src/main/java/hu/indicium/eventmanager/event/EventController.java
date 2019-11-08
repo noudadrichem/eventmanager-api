@@ -27,4 +27,19 @@ public class EventController {
 
         return new Response(eventService.addEvent(event), null);
     }
+
+    @PutMapping("/events/{id}")
+    public Response updateEvent(@RequestBody EventRequest eventRequest, @PathVariable long id) {
+
+        System.out.println(eventRequest);
+        Event updatedEvent = eventService.updateEventById(id, eventRequest);
+
+        return new Response(updatedEvent, null);
+    }
+
+    @DeleteMapping("/events/{id}")
+    public Response deleteEvent(@PathVariable long id) {
+        eventService.deleteEventById(id);
+        return new Response(null, null);
+    }
 }
