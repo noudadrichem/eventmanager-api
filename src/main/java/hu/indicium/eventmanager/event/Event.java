@@ -17,7 +17,7 @@ public class Event {
     private String status;
     private String title;
     private String description;
-    private String location;
+    private ArrayList<String> location;
     private String url;
     private ArrayList<String> categories;
 
@@ -77,11 +77,11 @@ public class Event {
         this.description = description;
     }
 
-    public String getLocation() {
+    public ArrayList<String> getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(ArrayList<String> location) {
         this.location = location;
     }
 
@@ -105,5 +105,20 @@ public class Event {
         if(!this.categories.contains(category)) {
             this.categories.add(category);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Event: "
+            + " id " +  id
+            + " startDate " +  startDate
+            + " endDate " +  endDate
+            + " slug " +  slug
+            + " status " +  status
+            + " title " +  title
+            + " description " +  description
+            + " location " +  location
+            + " url " +  url
+            + " categories " + categories;
     }
 }

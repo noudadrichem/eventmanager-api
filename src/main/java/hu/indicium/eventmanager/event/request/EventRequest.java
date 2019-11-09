@@ -10,7 +10,7 @@ public class EventRequest {
     private String status;
     private String title;
     private String description;
-    private String location;
+    private ArrayList<String> location;
     private String url;
     private ArrayList<String> categories;
 
@@ -70,11 +70,11 @@ public class EventRequest {
         this.description = description;
     }
 
-    public String getLocation() {
+    public ArrayList<String> getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(ArrayList<String> location) {
         this.location = location;
     }
 

@@ -17,15 +17,15 @@ public class EventController {
 
     @GetMapping("/events")
     public List<Event> getEvents() {
-        return eventService.getAllEvents();
+        List<Event> events = eventService.getAllEvents();
+        System.out.print(events);
+
+        return events;
     }
 
     @PostMapping("/events")
     public Response createEvent(@RequestBody EventRequest eventRequest) {
-        Event event = new Event();
-        event.setTitle(eventRequest.getTitle());
-
-        return new Response(eventService.addEvent(event), null);
+        return new Response(eventService.addEvent(eventRequest), null);
     }
 
     @PutMapping("/events/{id}")
@@ -40,6 +40,6 @@ public class EventController {
     @DeleteMapping("/events/{id}")
     public Response deleteEvent(@PathVariable long id) {
         eventService.deleteEventById(id);
-        return new Response(null, null);
+        return new Response(true, null);
     }
 }

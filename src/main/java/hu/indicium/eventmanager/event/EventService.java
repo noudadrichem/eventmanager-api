@@ -19,7 +19,8 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public Event addEvent(Event event) {
+    public Event addEvent(EventRequest eventRequest) {
+        Event event = this.eventReqToEvent(eventRequest);
         return eventRepository.save(event);
     }
 
@@ -27,30 +28,14 @@ public class EventService {
         Event event = findEventById(eventId);
 
         if (!event.equals(null)) {
-            // if(!eventRequest.getTitle().equals(null)) {
-                event.setTitle(eventRequest.getTitle());
-            // }
-            // if(!eventRequest.getDescription().equals(null)) {
-                event.setDescription(eventRequest.getDescription());
-            // }
-            // if(eventRequest.getStartDate() != null ) {
-                event.setStartDate(eventRequest.getStartDate());
-            // }
-            // if(eventRequest.getEndDate() != null) {
-                event.setEndDate(eventRequest.getEndDate());
-            // }
-            // if(!eventRequest.getStatus().equals(null)) {
-                event.setStatus(eventRequest.getStatus());
-            // }
-            // if(!eventRequest.getLocation().equals(null)) {
-                event.setLocation(eventRequest.getLocation());
-            // }
-            // if(!eventRequest.getUrl().equals(null)) {
-                event.setUrl(eventRequest.getUrl());
-            // }
-            // if(!eventRequest.getCategories().equals(null)) {
-                event.setCategories(eventRequest.getCategories());
-            // }
+            event.setTitle(eventRequest.getTitle());
+            event.setDescription(eventRequest.getDescription());
+            event.setStartDate(eventRequest.getStartDate());
+            event.setEndDate(eventRequest.getEndDate());
+            event.setStatus(eventRequest.getStatus());
+            event.setLocation(eventRequest.getLocation());
+            event.setUrl(eventRequest.getUrl());
+            event.setCategories(eventRequest.getCategories());
         }
 
         System.out.println(event);
@@ -64,5 +49,21 @@ public class EventService {
 
     private Event findEventById(Long eventId) {
         return eventRepository.findById(eventId).orElse(null);
+    }
+
+    private Event eventReqToEvent(EventRequest eventRequest) {
+        Event event = new Event();
+
+        event.setTitle(eventRequest.getTitle());
+        event.setDescription(eventRequest.getDescription());
+        event.setStartDate(eventRequest.getStartDate());
+        event.setEndDate(eventRequest.getEndDate());
+        event.setStatus(eventRequest.getStatus());
+        event.setLocation(eventRequest.getLocation());
+        event.setUrl(eventRequest.getUrl());
+        event.setCategories(eventRequest.getCategories());
+        event.setSlug(eventRequest.getSlug());
+
+        return event;
     }
 }
