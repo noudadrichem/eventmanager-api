@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.*;
 
 import hu.indicium.eventmanager.event.Event;
-import hu.indicium.eventmanager.event.EventRepository;
 import hu.indicium.eventmanager.event.EventService;
 import hu.indicium.eventmanager.inschrijving.reqeust.InschrijfRequest;
 
@@ -22,6 +21,10 @@ public class InschrijvingService {
 
     public List<Inschrijving> getAllInschrijvingen() {
         return inschrijvingRepository.findAll();
+    }
+
+    public List<Inschrijving> getInschrijvingenByEventId(Long eventId) {
+        return inschrijvingRepository.findAllByEventId(eventId);
     }
 
     public Inschrijving addInschrijving(InschrijfRequest inschrijfRequest) {

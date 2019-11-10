@@ -23,6 +23,13 @@ public class InschrijvingController {
         return new Response(inschrijvingen, null);
     }
 
+    @GetMapping("/inschrijvingen/{eventId}")
+    public Response getInschrijvingenByEventId(@PathVariable Long eventId) {
+        List<Inschrijving> inschrijvingen = inschrijvingService.getInschrijvingenByEventId(eventId);
+
+        return new Response(inschrijvingen, null);
+    }
+
     @PostMapping("/inschrijvingen")
     public Response addInschrijving(@RequestBody InschrijfRequest inschrijfRequest) {
 
