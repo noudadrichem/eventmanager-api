@@ -3,7 +3,7 @@ package hu.indicium.eventmanager.event;
 import java.util.*;
 import org.springframework.web.bind.annotation.*;
 
-import hu.indicium.eventmanager.event.response.*;
+import hu.indicium.eventmanager.response.*;
 import hu.indicium.eventmanager.event.request.*;
 
 @RestController

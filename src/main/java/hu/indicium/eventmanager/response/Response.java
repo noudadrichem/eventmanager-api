@@ -1,4 +1,4 @@
-package hu.indicium.eventmanager.event.response;
+package hu.indicium.eventmanager.response;
 
 public class Response {
     private Object data;
