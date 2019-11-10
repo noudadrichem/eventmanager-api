@@ -20,7 +20,7 @@ public class EventService {
     }
 
     public Event addEvent(EventRequest eventRequest) {
-        Event event = this.eventReqToEvent(eventRequest);
+        Event event = this.eventReqToEvent(eventRequest, null);
         return eventRepository.save(event);
     }
 
@@ -28,19 +28,11 @@ public class EventService {
         Event event = findEventById(eventId);
 
         if (!event.equals(null)) {
-            event.setTitle(eventRequest.getTitle());
-            event.setDescription(eventRequest.getDescription());
-            event.setStartDate(eventRequest.getStartDate());
-            event.setEndDate(eventRequest.getEndDate());
-            event.setStatus(eventRequest.getStatus());
-            event.setLocation(eventRequest.getLocation());
-            event.setUrl(eventRequest.getUrl());
-            event.setCategories(eventRequest.getCategories());
+            this.eventReqToEvent(eventRequest, event);
+            return eventRepository.save(event);
         }
 
-        System.out.println(event);
-
-        return eventRepository.save(event);
+        return null;
     }
 
     public void deleteEventById(long eventId) {
@@ -51,8 +43,10 @@ public class EventService {
         return eventRepository.findById(eventId).orElse(null);
     }
 
-    private Event eventReqToEvent(EventRequest eventRequest) {
-        Event event = new Event();
+    private Event eventReqToEvent(EventRequest eventRequest, Event event) {
+        if (event == null) {
+            event = new Event();
+        }
 
         event.setTitle(eventRequest.getTitle());
         event.setDescription(eventRequest.getDescription());

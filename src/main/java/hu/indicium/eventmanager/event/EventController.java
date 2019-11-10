@@ -18,22 +18,18 @@ public class EventController {
     @GetMapping("/events")
     public List<Event> getEvents() {
         List<Event> events = eventService.getAllEvents();
-        System.out.print(events);
-
         return events;
     }
 
     @PostMapping("/events")
     public Response createEvent(@RequestBody EventRequest eventRequest) {
-        return new Response(eventService.addEvent(eventRequest), null);
+        Event event = eventService.addEvent(eventRequest);
+        return new Response(event, null);
     }
 
     @PutMapping("/events/{id}")
     public Response updateEvent(@RequestBody EventRequest eventRequest, @PathVariable long id) {
-
-        System.out.println(eventRequest);
         Event updatedEvent = eventService.updateEventById(id, eventRequest);
-
         return new Response(updatedEvent, null);
     }
 
