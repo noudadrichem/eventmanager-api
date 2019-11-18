@@ -1,17 +1,17 @@
-package hu.indicium.eventmanager.inschrijving;
+package hu.indicium.eventmanager.registry;
 
 import javax.persistence.*;
 import hu.indicium.eventmanager.event.Event;
 
 @Entity
-public class Inschrijving {
+public class Registry {
 
     @Id
-    @SequenceGenerator(name = "inschrijving_id_generator", sequenceName = "inschrijving_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inschrijving_id_generator")
+    @SequenceGenerator(name = "registry_id_generator", sequenceName = "registry_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registry_id_generator")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL) // TODO: cascade doesnt work
     private Event event;
 
     private String name;

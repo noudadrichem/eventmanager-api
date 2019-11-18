@@ -1,13 +1,13 @@
-package hu.indicium.eventmanager.inschrijving.reqeust;
+package hu.indicium.eventmanager.registry.reqeust;
 
-public class InschrijfRequest {
+public class RegistryRequest {
     private Long id;
     private Long eventId;
     private String name;
     private String lidNumber;
     private String commisson;
 
-    public InschrijfRequest() {
+    public RegistryRequest() {
     }
 
     public Long getId() {
