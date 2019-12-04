@@ -1,11 +1,18 @@
 package hu.indicium.eventmanager.event;
 
 import java.util.*;
-
 import javax.persistence.*;
+import hu.indicium.eventmanager.question.Question;
 
 @Entity
 public class Event {
+    public Event() {}
+
+    enum Status {
+        DRAFT,
+        PUBLISHED,
+        PRIVATE
+    }
 
     @Id
     @SequenceGenerator(name = "event_id_generator", sequenceName = "event_seq", allocationSize = 1)
@@ -14,12 +21,17 @@ public class Event {
     private Date startDate;
     private Date endDate;
     private String slug;
-    private String status;
+    private Status status;
     private String title;
+
+    @Column(length = 500)
     private String description;
+
     private ArrayList<String> location;
-    private String url;
     private ArrayList<String> categories;
+
+    @OneToMany()
+    private List<Question> questions;
 
     public Long getId() {
         return id;
@@ -53,12 +65,19 @@ public class Event {
         this.slug = slug;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        switch (status) {
+            case "draft":
+                this.status = Status.DRAFT;
+            case "published":
+                this.status = Status.PUBLISHED;
+            case "private":
+                this.status = Status.PRIVATE;
+        }
     }
 
     public String getTitle() {
@@ -77,20 +96,20 @@ public class Event {
         this.description = description;
     }
 
+    public ArrayList<Question> getQuestion() {
+        return questions;
+    }
+
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
+
     public ArrayList<String> getLocation() {
         return location;
     }
 
     public void setLocation(ArrayList<String> location) {
         this.location = location;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public ArrayList<String> getCategories() {
@@ -110,15 +129,15 @@ public class Event {
     @Override
     public String toString() {
         return "Event: "
-            + " id " +  id
-            + " startDate " +  startDate
-            + " endDate " +  endDate
-            + " slug " +  slug
-            + " status " +  status
-            + " title " +  title
-            + " description " +  description
-            + " location " +  location
-            + " url " +  url
-            + " categories " + categories;
+            + " \nid= " +  id
+            + " \nstartDate= " +  startDate
+            + " \nendDate= " +  endDate
+            + " \nslug= " +  slug
+            + " \nstatus= " +  status
+            + " \ntitle= " +  title
+            + " \ndescription= " +  description
+            + " \nlocation= " +  location
+            + " \ncategories= " + categories;
+            // + " \nquestions= " + questions;
     }
 }

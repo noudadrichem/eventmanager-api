@@ -17,8 +17,9 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    public Question addQuestion(QuestionRequest eventRequest) {
-        return null;
+    public Question addQuestion(QuestionRequest questionRequest) {
+        Question question = this.questionReqToQuestion(questionRequest, null);
+        return questionRepository.save(question);
     }
 
     public Question updateQuestionById(long eventId, QuestionRequest eventRequest) {
@@ -34,21 +35,14 @@ public class QuestionService {
 
     }
 
-    // private Question questionReqToQuestion(QuestionRequest questionRequest, Question question) {
-    //     if (question == null) {
-    //         question = new Question();
-    //     }
+    private Question questionReqToQuestion(QuestionRequest questionRequest, Question question) {
+        if (question == null) {
+            question = new Question();
+        }
 
-    //     // question.setTitle(questionRequest.getTitle());
-    //     // question.setDescription(questionRequest.getDescription());
-    //     // question.setStartDate(questionRequest.getStartDate());
-    //     // question.setEndDate(questionRequest.getEndDate());
-    //     // question.setStatus(questionRequest.getStatus());
-    //     // question.setLocation(questionRequest.getLocation());
-    //     // question.setUrl(questionRequest.getUrl());
-    //     // question.setCategories(questionRequest.getCategories());
-    //     // question.setSlug(questionRequest.getSlug());
+        question.setType(questionRequest.getType());
+        question.setQuestion(questionRequest.getQuestion());
 
-    //     return question;
-    // }
+        return question;
+    }
 }

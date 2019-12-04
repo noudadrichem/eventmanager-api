@@ -12,6 +12,7 @@ public class Registry {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL) // TODO: cascade doesnt work
+    @JoinColumn(name="event_id", nullable=false)
     private Event event;
 
     private String name;

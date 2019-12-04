@@ -5,14 +5,18 @@ import java.util.*;
 import org.springframework.stereotype.*;
 
 import hu.indicium.eventmanager.event.request.EventRequest;
+import hu.indicium.eventmanager.question.Question;
+import hu.indicium.eventmanager.question.QuestionService;
 
 @Service
 public class EventService {
 
     private final EventRepository eventRepository;
+    private QuestionService questionService;
 
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository, QuestionService questionService) {
         this.eventRepository = eventRepository;
+        this.questionService = questionService;
     }
 
     public List<Event> getAllEvents() {
@@ -54,9 +58,14 @@ public class EventService {
         event.setEndDate(eventRequest.getEndDate());
         event.setStatus(eventRequest.getStatus());
         event.setLocation(eventRequest.getLocation());
-        event.setUrl(eventRequest.getUrl());
         event.setCategories(eventRequest.getCategories());
         event.setSlug(eventRequest.getSlug());
+
+        ArrayList<Question> questions = new ArrayList<Question>();
+        for (Long questionId : eventRequest.getQuestions()) {
+            questions.add(questionService.findQuestionById(questionId));
+        }
+        event.setQuestions(questions);
 
         return event;
     }

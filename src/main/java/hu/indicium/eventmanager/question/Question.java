@@ -2,6 +2,8 @@ package hu.indicium.eventmanager.question;
 
 import javax.persistence.*;
 
+import hu.indicium.eventmanager.event.Event;
+
 @Entity
 public class Question {
 
@@ -12,6 +14,9 @@ public class Question {
     private String type;
     private String question;
 
+    @JoinColumn(name = "event_id", nullable=true)
+    @ManyToOne
+    private Event event;
 
     public Long getId() {
         return id;

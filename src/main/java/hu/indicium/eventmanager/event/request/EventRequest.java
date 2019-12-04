@@ -3,7 +3,6 @@ package hu.indicium.eventmanager.event.request;
 import java.util.*;
 
 public class EventRequest {
-    private Long id;
     private Date startDate;
     private Date endDate;
     private String slug;
@@ -11,16 +10,8 @@ public class EventRequest {
     private String title;
     private String description;
     private ArrayList<String> location;
-    private String url;
     private ArrayList<String> categories;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private ArrayList<Long> questions;
 
     public Date getStartDate() {
         return startDate;
@@ -50,10 +41,6 @@ public class EventRequest {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -78,14 +65,6 @@ public class EventRequest {
         this.location = location;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public ArrayList<String> getCategories() {
         return this.categories;
     }
@@ -94,9 +73,11 @@ public class EventRequest {
         this.categories = categories;
     }
 
-    public void addCategory(String category) {
-        if (!this.categories.contains(category)) {
-            this.categories.add(category);
-        }
+    public ArrayList<Long> getQuestions() {
+        return this.questions;
+    }
+
+    public void setQuestions(ArrayList<Long> questions) {
+        this.questions = questions;
     }
 }

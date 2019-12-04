@@ -30,6 +30,13 @@ public class RegistryController {
         return new Response(Registryen, null);
     }
 
+    @GetMapping("/register/{eventId}/small")
+    public Response getSmallRegistryenByEventId(@PathVariable Long eventId) {
+        List<Registry> registryen = registryService.getRegisersByEventId(eventId);
+
+        return new Response(registryen, null);
+    }
+
     @PostMapping("/register")
     public Response addRegistry(@RequestBody RegistryRequest inschrijfRequest) {
 
