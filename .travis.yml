@@ -14,7 +14,7 @@ before_script:
   - bash ./.travis/install-postgres-11.sh
 
 script:
-  - ./gradlew build jacocoTestReport sonarqube
+    - ./mvnw clean package
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
