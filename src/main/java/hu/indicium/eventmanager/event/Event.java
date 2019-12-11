@@ -96,7 +96,7 @@ public class Event {
         this.description = description;
     }
 
-    public ArrayList<Question> getQuestion() {
+    public List<Question> getQuestion() {
         return questions;
     }
 
