@@ -27,8 +27,10 @@ public class Event {
     @Column(length = 500)
     private String description;
 
-    private ArrayList<String> location;
-    private ArrayList<String> categories;
+    @ElementCollection
+    private List<String> location;
+    @ElementCollection
+    private List<String> categories;
 
     @OneToMany()
     private List<Question> questions;
@@ -71,12 +73,12 @@ public class Event {
 
     public void setStatus(String status) {
         switch (status) {
-            case "draft":
-                this.status = Status.DRAFT;
             case "published":
                 this.status = Status.PUBLISHED;
             case "private":
                 this.status = Status.PRIVATE;
+            default:
+                this.status = Status.DRAFT;
         }
     }
 
@@ -100,23 +102,23 @@ public class Event {
         return questions;
     }
 
-    public void setQuestions(ArrayList<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
-    public ArrayList<String> getLocation() {
+    public List<String> getLocation() {
         return location;
     }
 
-    public void setLocation(ArrayList<String> location) {
+    public void setLocation(List<String> location) {
         this.location = location;
     }
 
-    public ArrayList<String> getCategories() {
+    public List<String> getCategories() {
         return this.categories;
     }
 
-    public void setCategories(ArrayList<String> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
@@ -137,7 +139,7 @@ public class Event {
             + " \ntitle= " +  title
             + " \ndescription= " +  description
             + " \nlocation= " +  location
-            + " \ncategories= " + categories;
-            // + " \nquestions= " + questions;
+            + " \ncategories= " + categories
+            + " \nquestions= " + questions;
     }
 }

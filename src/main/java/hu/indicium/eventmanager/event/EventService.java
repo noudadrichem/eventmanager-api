@@ -43,7 +43,7 @@ public class EventService {
         eventRepository.deleteById(eventId);
     }
 
-    public Event findEventById(Long eventId) {
+    public Event findEventById(long eventId) {
         return eventRepository.findById(eventId).orElse(null);
     }
 
@@ -61,7 +61,7 @@ public class EventService {
         event.setCategories(eventRequest.getCategories());
         event.setSlug(eventRequest.getSlug());
 
-        ArrayList<Question> questions = new ArrayList<Question>();
+        List<Question> questions = new ArrayList<Question>();
         for (Long questionId : eventRequest.getQuestions()) {
             questions.add(questionService.findQuestionById(questionId));
         }

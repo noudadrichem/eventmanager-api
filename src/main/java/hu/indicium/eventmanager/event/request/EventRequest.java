@@ -9,9 +9,9 @@ public class EventRequest {
     private String status;
     private String title;
     private String description;
-    private ArrayList<String> location;
-    private ArrayList<String> categories;
-    private ArrayList<Long> questions;
+    private List<String> location;
+    private List<String> categories;
+    private List<Long> questions;
 
     public Date getStartDate() {
         return startDate;
@@ -57,27 +57,27 @@ public class EventRequest {
         this.description = description;
     }
 
-    public ArrayList<String> getLocation() {
+    public List<String> getLocation() {
         return location;
     }
 
-    public void setLocation(ArrayList<String> location) {
+    public void setLocation(List<String> location) {
         this.location = location;
     }
 
-    public ArrayList<String> getCategories() {
+    public List<String> getCategories() {
         return this.categories;
     }
 
-    public void setCategories(ArrayList<String> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
-    public ArrayList<Long> getQuestions() {
+    public List<Long> getQuestions() {
         return this.questions;
     }
 
-    public void setQuestions(ArrayList<Long> questions) {
+    public void setQuestions(List<Long> questions) {
         this.questions = questions;
     }
 }

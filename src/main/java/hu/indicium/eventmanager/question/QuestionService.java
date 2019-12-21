@@ -22,17 +22,23 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public Question updateQuestionById(long eventId, QuestionRequest eventRequest) {
+    public Question updateQuestionById(long questionId, QuestionRequest questionRequest) {
+        Question question = findQuestionById(questionId);
+
+        if (!question.equals(null)) {
+            this.questionReqToQuestion(questionRequest, question);
+            return questionRepository.save(question);
+        }
+
         return null;
     }
 
-    public void deleteQuestionById(long eventId) {
+    public void deleteQuestionById(long questionId) {
 
     }
 
-    public Question findQuestionById(Long eventId) {
-        return null;
-
+    public Question findQuestionById(long questionId) {
+        return questionRepository.findById(questionId).orElse(null);
     }
 
     private Question questionReqToQuestion(QuestionRequest questionRequest, Question question) {
