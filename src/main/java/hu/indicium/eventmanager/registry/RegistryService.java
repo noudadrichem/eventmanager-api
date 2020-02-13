@@ -2,6 +2,7 @@ package hu.indicium.eventmanager.registry;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.*;
 
 import hu.indicium.eventmanager.event.Event;
@@ -19,14 +20,17 @@ public class RegistryService {
         this.eventService = eventService;
     }
 
+    @PreAuthorize("true")
     public List<Registry> getAllRegisters() {
         return registryRepository.findAll();
     }
 
+    @PreAuthorize("hasPermission('read:user') || hasPermission('admin:user')")
     public List<Registry> getRegisersByEventId(Long eventId) {
         return registryRepository.findAllByEventId(eventId);
     }
 
+    @PreAuthorize("true")
     public Registry addRegistry(RegistryRequest inschrijfRequest) {
         Registry Registry = new Registry();
 
@@ -39,5 +43,4 @@ public class RegistryService {
 
         return this.registryRepository.save(Registry);
     }
-
 }

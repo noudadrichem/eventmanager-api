@@ -2,6 +2,7 @@ package hu.indicium.eventmanager.event;
 
 import java.util.*;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.*;
 
 import hu.indicium.eventmanager.event.request.EventRequest;
@@ -19,15 +20,18 @@ public class EventService {
         this.questionService = questionService;
     }
 
+    @PreAuthorize("true")
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
 
+    @PreAuthorize("hasPermission('create:event')")
     public Event addEvent(EventRequest eventRequest) {
         Event event = this.eventReqToEvent(eventRequest, null);
         return eventRepository.save(event);
     }
 
+    @PreAuthorize("hasPermission('update:event')")
     public Event updateEventById(long eventId, EventRequest eventRequest) {
         Event event = findEventById(eventId);
 
@@ -39,10 +43,12 @@ public class EventService {
         return null;
     }
 
+    @PreAuthorize("hasPermission('delete:event')")
     public void deleteEventById(long eventId) {
         eventRepository.deleteById(eventId);
     }
 
+    @PreAuthorize("true")
     public Event findEventById(long eventId) {
         return eventRepository.findById(eventId).orElse(null);
     }
